@@ -1,3 +1,4 @@
+// TEMP: please run format against this file
 use concordium_rust_sdk::{
     base as concordium_base,
     common::{SerdeBase16Serialize, Serial, Serialize},
@@ -27,6 +28,8 @@ pub struct Challenge(pub [u8; 32]);
 pub struct InfoQuery {
     pub auth: String,
 }
+
+
 
 #[derive(serde::Deserialize, Debug, Clone)]
 pub struct WithAccountAddress {
