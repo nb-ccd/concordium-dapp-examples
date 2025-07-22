@@ -1,4 +1,3 @@
-// TEMP: please run format against this file
 mod handlers;
 mod types;
 use crate::{handlers::*, types::*};
