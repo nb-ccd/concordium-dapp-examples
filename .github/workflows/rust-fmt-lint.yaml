@@ -44,7 +44,7 @@ jobs:
           list-files: shell
           filters: |
             rust:
-            - added|modified: '*.rs'
+            - added|modified: '***.rs'
 
       - name: Process the list of files
         if: ${{ steps.rust-changes.outputs.rust == 'true' }}
