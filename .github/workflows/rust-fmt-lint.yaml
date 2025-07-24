@@ -55,7 +55,7 @@ jobs:
           echo ${{ toJSON(steps.rust-changes.outputs.rust_files) }}
           echo "toJSON quoted"
           echo "${{ toJSON(steps.rust-changes.outputs.rust_files) }}"
-          echo "${{ toJSON(steps.rust-changes.outputs.rust_files) }}" | jq '[.[] | split("/")[:2] | join("/")] | unique '
+          echo '${{ steps.rust-changes.outputs.rust_files }}' | jq '[.[] | split("/")[:2] | join("/")] | unique '
 
           
 # jobs:
@@ -63,7 +63,7 @@ jobs:
 #     name: Running formatting
 #     # Don't run on draft pull requests
 #     if: ${{ !github.event.pull_request.draft }}
-#     runs-on: ubuntu-latest
+#     runs-on: ubuntu-latest  
 #     strategy:
 #       matrix:
 #         crates:
