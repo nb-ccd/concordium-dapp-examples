@@ -48,11 +48,10 @@ jobs:
             - added|modified: '**/*.rs'
   
       - name: Print the list of files
-        if: ${{ steps.rust-changes.outputs.rust == 'true' }}
         run: |
-          echo ${{ steps.rust-changes.outputs.rust_files }} 
+          echo ${{ fromJSON(steps.rust-changes.outputs.rust_files) }}
           echo "Check if jq is installed"
-          jq ${{ steps.rust-changes.outputs.rust_files }} 
+          echo ${{ steps.rust-changes.outputs.rust_files }} | jq '[.[] | split("/")[:2] | join("/")] | unique '
 
           
 # jobs:
