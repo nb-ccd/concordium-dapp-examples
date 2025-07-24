@@ -48,11 +48,11 @@ jobs:
             - added|modified: '**/*.rs'
   
       - name: Print the list of files
-        if: ${{ steps.rust-changes.outputs.rust-files == 'true' }}
+        if: ${{ steps.rust-changes.outputs.rust-changes == 'true' }}
         run: |
-          echo ${{ steps.rust-changes.outputs.rust-files }} 
+          echo ${{ steps.rust-changes.outputs.rust-changes }} 
           echo "Check if jq is installed"
-          jq ${{ steps.rust-changes.outputs.rust-files }} 
+          jq ${{ steps.rust-changes.outputs.rust-changes }} 
 
           
 # jobs:
