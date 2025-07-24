@@ -30,7 +30,10 @@ jobs:
   changes:
     name: Detect changed files in Rust projects
     if: ${{ !github.event.pull_request.draft }}
+    id: changes
     runs-on: ubuntu-latest
+    outputs:
+      paths: ${{ steps.rust-directories.outputs.matrix }}
     steps:
       - uses: actions/checkout@v4
 
@@ -45,48 +48,41 @@ jobs:
             - added|modified: '**/*.rs'
   
       - name: Print the list of files
+        id: rust-directories
         run: |
           echo "Print the output"
           echo ${{ steps.rust-changes.outputs.rust_files }}
           echo '${{ steps.rust-changes.outputs.rust_files }}' | jq '[.[] | split("/")[:2] | join("/")] | unique' 
-          linters=$(echo '${{ steps.rust-changes.outputs.rust_files }}' | jq -c '[.[] | split("/")[:2] | join("/")] | unique')
+          matrix=$(echo '${{ steps.rust-changes.outputs.rust_files }}' | jq -c '[.[] | split("/")[:2] | join("/")] | unique')
           echo "printing resulting variable"
           echo $linters
           echo "writing to github output"
-          echo "matrix=${linters}" >> $GITHUB_OUTPUT
+          echo "matrix=${matrix}" >> $GITHUB_OUTPUT
           
-# jobs:
-#   lint_fmt:
-#     name: Running formatting
-#     # Don't run on draft pull requests
-#     if: ${{ !github.event.pull_request.draft }}
-#     runs-on: ubuntu-latest  
-#     strategy:
-#       matrix:
-#         crates:
-#           - gallery/verifier/Cargo.toml
-#           - low-code-nft-marketplace/cis2-market/Cargo.toml
-#           - sponsoredTransactions/backend/Cargo.toml
-#           - sponsoredTransactionsAuction/backend/Cargo.toml
-#           - trackAndTrace/smart-contract/Cargo.toml
-#           - trackAndTrace/test-scripts/Cargo.toml
-#           - trackAndTrace/indexer/Cargo.toml
-#           - trackAndTrace/sponsored-transaction-service/Cargo.toml
-#           - compliant-reward-distribution/indexer-and-server/Cargo.toml
+jobs:
+  lint_fmt:
+    name: Running formatting
+    # Don't run on draft pull requests
+    if: ${{ !github.event.pull_request.draft && needs.changes.outputs.paths != '[]' && needs.changes.outputs.paths != '' }}
+    needs: changes
+    runs-on: ubuntu-latest  
+    strategy:
+      matrix:
+        paths: ${{ fromJSON(needs.changed-files.outputs.matrix) }}
 
-#     steps:
-#       - name: Checkout
-#         uses: actions/checkout@v4
-#         with:
-#           submodules: recursive
-#       - name: Get toolchain
-#         # Ensure rustfmt is installed and setup problem matcher
-#         uses: actions-rust-lang/setup-rust-toolchain@v1
-#         with:
-#           toolchain: ${{ env.RUST_FMT }}
-#           components: rustfmt
-#       - name: Rustfmt Check
-#         run: cargo fmt --manifest-path=${{ matrix.crates }} -- --check
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - name: Get toolchain
+        # Ensure rustfmt is installed and setup problem matcher
+        uses: actions-rust-lang/setup-rust-toolchain@v1
+        with:
+          toolchain: ${{ env.RUST_FMT }}
+          components: rustfmt
+      - name: Rustfmt Check
+        run: cargo fmt --manifest-path=${{ matrix.paths }}/Cargo.toml -- --check
 
   # lint_clippy:
   #   name: Running clippy
