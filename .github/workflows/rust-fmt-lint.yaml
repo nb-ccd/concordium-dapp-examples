@@ -50,12 +50,8 @@ jobs:
       - name: Print the list of files
         run: |
           echo "Print the output"
-          echo ${{ steps.rust-changes.outputs.rust_files }}"
-          echo "toJSON"
-          echo ${{ toJSON(steps.rust-changes.outputs.rust_files) }}
-          echo "toJSON quoted"
-          echo "${{ toJSON(steps.rust-changes.outputs.rust_files) }}"
-          echo '${{ steps.rust-changes.outputs.rust_files }}' | jq '[.[] | split("/")[:2] | join("/")] | unique '
+          echo ${{ steps.rust-changes.outputs.rust_files }}
+          echo '${{ steps.rust-changes.outputs.rust_files }}' | jq '[.[] | split("/")[:2] | join("/")] | unique'
 
           
 # jobs:
