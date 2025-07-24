@@ -16,7 +16,6 @@ use tokio_postgres::{
 };
 use track_and_trace::{Status, *};
 
-/// TEMP: please run the tests thanks.
 /// Represents possible errors returned from [`Database`] or [`DatabasePool`]
 /// functions
 #[derive(thiserror::Error, Debug)]
