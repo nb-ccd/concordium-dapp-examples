@@ -31,9 +31,6 @@ jobs:
     name: Detect changed files in Rust projects
     if: ${{ !github.event.pull_request.draft }}
     runs-on: ubuntu-latest
-    # Map a step output to a job output
-    outputs:
-      rust-files: ${{ steps.rust-changes.outputs.rust-changes }}
     steps:
       - uses: actions/checkout@v4
 
@@ -51,8 +48,10 @@ jobs:
         run: |
           echo "Print the output"
           echo ${{ steps.rust-changes.outputs.rust_files }}
-          echo '${{ steps.rust-changes.outputs.rust_files }}' | jq '[.[] | split("/")[:2] | join("/")] | unique'
-
+          echo '${{ steps.rust-changes.outputs.rust_files }}' | jq '[.[] | split("/")[:2] | join("/")] | unique' 
+          linters=$(echo '${{ steps.rust-changes.outputs.rust_files }}' | jq '[.[] | split("/")[:2] | join("/")] | unique')
+          echo $linters
+          echo "matrix=${linters}" >> $GITHUB_OUTPUT
           
 # jobs:
 #   lint_fmt:
