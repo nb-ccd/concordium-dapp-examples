@@ -44,11 +44,11 @@ jobs:
           list-files: json
           # Exclude deleted files, those don't need linting.
           filters: |
-            rust-changes:
+            changes:
             - added|modified: '**/*.rs'
   
       - name: Print the list of files
-        if: ${{ steps.rust-changes.outputs.rust == 'true' }}
+        if: ${{ steps.rust-changes.outputs.changes == 'true' }}
         run: |
           echo ${{ steps.rust-changes.outputs.rust_files }} 
           echo "Check if jq is installed"
