@@ -48,7 +48,7 @@ jobs:
             - added|modified: '**/*.rs'
   
       - name: Print the list of files
-        if: ${{ steps.rust-changes.outputs.changes == 'true' }}
+        if: ${{ steps.rust-changes.outputs.rust-files == 'true' }}
         run: |
           echo ${{ steps.rust-changes.outputs.rust-files }} 
           echo "Check if jq is installed"
