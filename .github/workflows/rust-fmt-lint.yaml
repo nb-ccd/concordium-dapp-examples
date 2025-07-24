@@ -30,7 +30,6 @@ jobs:
   changes:
     name: Detect changed files in Rust projects
     if: ${{ !github.event.pull_request.draft }}
-    id: changes
     runs-on: ubuntu-latest
     outputs:
       paths: ${{ steps.rust-directories.outputs.matrix }}
@@ -58,8 +57,7 @@ jobs:
           echo $linters
           echo "writing to github output"
           echo "matrix=${matrix}" >> $GITHUB_OUTPUT
-          
-jobs:
+     
   lint_fmt:
     name: Running formatting
     # Don't run on draft pull requests
@@ -68,7 +66,7 @@ jobs:
     runs-on: ubuntu-latest  
     strategy:
       matrix:
-        paths: ${{ fromJSON(needs.changed-files.outputs.matrix) }}
+        paths: ${{ fromJSON(needs.changes.outputs.paths) }}
 
     steps:
       - name: Checkout
