@@ -49,9 +49,13 @@ jobs:
   
       - name: Print the list of files
         run: |
-          echo ${{ fromJSON(steps.rust-changes.outputs.rust_files) }}
-          echo "Check if jq is installed"
-          echo "${{ fromJSON(steps.rust-changes.outputs.rust_files) }}" | jq '[.[] | split("/")[:2] | join("/")] | unique '
+          echo "Print the output"
+          echo ${{ steps.rust-changes.outputs.rust_files }}"
+          echo "toJSON"
+          echo ${{ toJSON(steps.rust-changes.outputs.rust_files) }}
+          echo "toJSON quoted"
+          echo "${{ toJSON(steps.rust-changes.outputs.rust_files) }}"
+          echo "${{ toJSON(steps.rust-changes.outputs.rust_files) }}" | jq '[.[] | split("/")[:2] | join("/")] | unique '
 
           
 # jobs:
