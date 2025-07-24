@@ -1,3 +1,4 @@
+//! TEMP: please run format against this file.
 //! Provides error types which can be returned by Marketplace Contract.
 //! Read more about errors which can be returned by a Concordium Contract [here](https://developer.concordium.software/en/mainnet/smart-contracts/guides/custom-errors.html)
 
@@ -18,5 +19,3 @@ pub enum MarketplaceError {
     InvalidTokenQuantity,
     InvalidRoyalty,
 }
-
-// TEMP: please run format against this file.
