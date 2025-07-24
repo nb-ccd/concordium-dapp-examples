@@ -33,7 +33,7 @@ jobs:
     runs-on: ubuntu-latest
     # Map a step output to a job output
     outputs:
-      rust-files: ${{ steps.rust-changes.outputs.changes }}
+      rust-files: ${{ steps.rust-changes.outputs.rust-changes }}
     steps:
       - uses: actions/checkout@v4
 
@@ -44,15 +44,15 @@ jobs:
           list-files: json
           # Exclude deleted files, those don't need linting.
           filters: |
-            changes:
+            rust-changes:
             - added|modified: '**/*.rs'
   
       - name: Print the list of files
         if: ${{ steps.rust-changes.outputs.changes == 'true' }}
         run: |
-          echo ${{ steps.rust-changes.outputs.rust_files }} 
+          echo ${{ steps.rust-changes.outputs.rust-files }} 
           echo "Check if jq is installed"
-          jq ${{ steps.rust-changes.outputs.rust_files }} 
+          jq ${{ steps.rust-changes.outputs.rust-files }} 
 
           
 # jobs:
