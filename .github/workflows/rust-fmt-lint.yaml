@@ -41,22 +41,19 @@ jobs:
         uses: dorny/paths-filter@v3
         id: rust-changes
         with:
-          list-files: shell
+          list-files: json
+          # Exclude deleted files, those don't need linting.
           filters: |
-            rust:
-            - '**/*.rs'
-            rust-changed:
+            rust-changes:
             - added|modified: '**/*.rs'
   
-      - name: Process the list of files
+      - name: Print the list of files
         if: ${{ steps.rust-changes.outputs.rust == 'true' }}
         run: |
           echo ${{ steps.rust-changes.outputs.rust_files }} 
+          echo "Check if jq is installed"
+          jq ${{ steps.rust-changes.outputs.rust_files }} 
 
-      - name: Process the list of files
-        if: ${{ steps.rust-changes.outputs.rust == 'true' }}
-        run: |
-          echo ${{ steps.rust-changes.outputs.rust_files }} | cut -d'/' -f1-2 
           
 # jobs:
 #   lint_fmt:
