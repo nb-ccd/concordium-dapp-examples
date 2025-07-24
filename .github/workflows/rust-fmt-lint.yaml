@@ -49,8 +49,10 @@ jobs:
           echo "Print the output"
           echo ${{ steps.rust-changes.outputs.rust_files }}
           echo '${{ steps.rust-changes.outputs.rust_files }}' | jq '[.[] | split("/")[:2] | join("/")] | unique' 
-          linters=$(echo '${{ steps.rust-changes.outputs.rust_files }}' | jq '[.[] | split("/")[:2] | join("/")] | unique')
+          linters=$(echo '${{ steps.rust-changes.outputs.rust_files }}' | jq -c '[.[] | split("/")[:2] | join("/")] | unique')
+          echo "printing resulting variable"
           echo $linters
+          echo "writing to github output"
           echo "matrix=${linters}" >> $GITHUB_OUTPUT
           
 # jobs:
