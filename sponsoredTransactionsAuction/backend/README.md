@@ -93,4 +93,4 @@ The project is a pure Rust project, and can be built by running
 cargo build --release
 ```
 
-This produces a single binary `target/release/sponsored-transaction-backend`.
+This produces a single binary `target/release/sponsored-transaction-auction-backend`.
