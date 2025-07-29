@@ -24,7 +24,6 @@ use concordium_rust_sdk::{
         Web3IdAttribute,
     },
 };
-use handlebars::{no_escape, Handlebars};
 use crdindexer::{
     constants::{
         CONTEXT_STRING, CURRENT_TWEET_VERIFICATION_VERSION, CURRENT_ZK_PROOF_VERIFICATION_VERSION,
@@ -40,6 +39,7 @@ use crdindexer::{
         ZKProofExtractedData, ZKProofStatementsReturn,
     },
 };
+use handlebars::{no_escape, Handlebars};
 use regex::Regex;
 use sha2::Digest;
 use std::{fs, path::PathBuf};
