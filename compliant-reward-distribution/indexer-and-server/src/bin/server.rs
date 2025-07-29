@@ -1,4 +1,4 @@
-use ::indexer::{db::DatabasePool, types::Server};
+use ::crdindexer::{db::DatabasePool, types::Server};
 use anyhow::Context;
 use axum::{
     extract::State,
@@ -25,7 +25,7 @@ use concordium_rust_sdk::{
     },
 };
 use handlebars::{no_escape, Handlebars};
-use indexer::{
+use crdindexer::{
     constants::{
         CONTEXT_STRING, CURRENT_TWEET_VERIFICATION_VERSION, CURRENT_ZK_PROOF_VERIFICATION_VERSION,
         MAX_REQUEST_LIMIT, SIGNATURE_AND_PROOF_EXPIRY_DURATION_BLOCKS, TESTNET_GENESIS_BLOCK_HASH,

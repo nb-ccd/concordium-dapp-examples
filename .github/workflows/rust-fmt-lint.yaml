@@ -8,16 +8,6 @@ on:
 
   pull_request:
     branches: main
-    paths:
-      - 'gallery/verifier/**'
-      - 'low-code-nft-marketplace/cis2-market/**'
-      - 'sponsoredTransactions/**'
-      - 'sponsoredTransactionsAuction/backend/**'
-      - 'trackAndTrace/smart-contract/**'
-      - 'trackAndTrace/test-scripts/**'
-      - 'trackAndTrace/indexer/**'
-      - 'trackAndTrace/sponsored-transaction-service/**'
-      - 'compliant-reward-distribution/indexer-and-server/**'
 
   workflow_dispatch: # allows manual trigger
 
@@ -57,12 +47,9 @@ env:
         with:
           submodules: recursive
 
-      - name: Install Clippy
+      - name: Install and run Clippy
         run: |
           rustup component add clippy
-
-      - name: Run Clippy
-        run: |
           cargo clippy --locked --all-targets --all-features --no-deps -- -D warnings
 
   # build:
