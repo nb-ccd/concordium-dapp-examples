@@ -7,7 +7,7 @@ FROM ${RUST_IMAGE} as build
 WORKDIR /indexer
 COPY ./compliant-reward-distribution/indexer-and-server ./
 COPY ./deps/concordium-rust-sdk /deps/concordium-rust-sdk
-RUN cargo build --release
+RUN CARGO_TARGET_DIR=./target cargo build --release
 
 FROM debian:bookworm
 

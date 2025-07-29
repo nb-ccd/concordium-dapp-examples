@@ -26,7 +26,7 @@ RUN cargo build --release
 FROM ubuntu:22.04
 WORKDIR /build
 
-COPY --from=back_end ./backend/app/target/release/sponsored-transaction-backend ./sponsored-transaction-backend
+COPY --from=back_end ./backend/app/target/release/sponsored-transaction-auction-backend ./sponsored-transaction-backend
 COPY --from=front_end ./app/dist ./public
 RUN apt-get update && apt-get install -y  ca-certificates
 
