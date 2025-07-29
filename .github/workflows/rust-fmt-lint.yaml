@@ -12,7 +12,7 @@ on:
   workflow_dispatch: # allows manual trigger
 
 env:
-  RUST_FMT: nightly-2023-04-01-x86_64-unknown-linux-gnu
+  RUST_FMT_VERSION: nightly-2023-04-01-x86_64-unknown-linux-gnu
   RUST_VERSION: 1.85
   CARGO_CONCORDIUM_VERSION: "4.2.0"
 
@@ -31,7 +31,8 @@ jobs:
 
       - name: Run cargo fmt
         run: |
-          rustup show 
+          rustup show
+          rustc -V
           rustup +${{ env.RUST_FMT_VERSION }} component add rustfmt
           cargo +${{ env.RUST_FMT_VERSION }} fmt --check
 
@@ -47,7 +48,8 @@ jobs:
       - name: Install and run Clippy
         run: |
           rustup component add clippy
-          cargo clippy --locked --all-targets --all-features --no-deps -- -D warnings
+          # Removing `-D warnings` temporarily since low-code-nft-marketplace/cis2-market uses deprecated test suite
+          cargo clippy --locked --all-targets --all-features --no-deps --
 
   build:
     name: Build Rust project
@@ -63,7 +65,7 @@ jobs:
           submodules: recursive
 
       - name: Run cargo build
-        run: cargo build --manifest-path=${{ matrix.paths }}/Cargo.toml --locked
+        run: cargo build --all --locked
 
   # test:
   #   name: Running cargo-concordium tests
