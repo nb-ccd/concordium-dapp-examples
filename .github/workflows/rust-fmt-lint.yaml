@@ -86,7 +86,7 @@ jobs:
         run: | 
           rustup set profile minimal
           rustup toolchain install ${RUST_VERSION}
-          rustup override set ${R}UST_VERSION}
+          rustup override set ${RUST_VERSION}
           rustup target add x86_64-unknown-linux-gnu
           rustup show 
           rustup target install wasm32-unknown-unknown
