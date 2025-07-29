@@ -38,6 +38,7 @@ jobs:
 
   clippy:
     name: Running Clippy for linting and dependency validation
+    needs: rust_fmt
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -54,6 +55,7 @@ jobs:
   build:
     name: Build Rust project
     # Don't run on draft pull requests
+    needs: clippy
     if: ${{ !github.event.pull_request.draft }}
     runs-on: ubuntu-latest
 
@@ -69,6 +71,7 @@ jobs:
 
   test:
     name: Running cargo-concordium tests
+    needs: build
     # Don't run on draft pull requests
     if: ${{ !github.event.pull_request.draft }}
     runs-on: ubuntu-latest
@@ -83,7 +86,7 @@ jobs:
         run: | 
           rustup set profile minimal
           rustup toolchain install ${RUST_VERSION}
-          rustup override set $RUST_VERSION}
+          rustup override set ${R}UST_VERSION}
           rustup target add x86_64-unknown-linux-gnu
           rustup show 
           rustup target install wasm32-unknown-unknown
